@@ -1,0 +1,69 @@
+.highArea {
+  width: 100%;
+  height: auto;
+  padding: 10px 0px;
+
+  .table-header {
+    width: 100%;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    background-color: rgb(230, 204, 255);
+    color: rgb(93, 29, 153);
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .table-body {
+    width: auto;
+    height: 100%;
+
+    // display: -moz-box;
+    .table-cell {
+      // width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 10px;
+      // text-align: center;
+      font-size: 0.7rem;
+      border-bottom: 1px solid #ebebeb;
+      border-left: 1px solid #ebebeb;
+      border-right: 1px solid #ebebeb;
+
+      .city {
+        width: 20%;
+        height: 100%;
+        padding: 3px;
+        // text-align: center;
+        // border-right: 1px solid #ebebeb;
+      }
+
+      .county {
+        width: 25%;
+        height: 100%;
+        padding: 3px;
+        // text-align: center;
+        // border-right: 1px solid #ebebeb;
+      }
+
+      .community {
+        width: 55%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        // border-left: 1px solid #ebebeb;
+
+        // align-items: center;
+        .one {
+          width: 90%;
+          height: auto;
+          padding: 3px 0px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
