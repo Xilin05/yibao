@@ -178,6 +178,7 @@ export default {
   .tabs {
     margin-top: 1rem;
     // border-top: 1px solid rgb(240, 240, 240);
+    background-color: white;
   }
 }
 .cell-card::before {

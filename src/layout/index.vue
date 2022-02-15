@@ -39,4 +39,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.main-container {
+  background-color: #f9fbfd;
+}
 </style>

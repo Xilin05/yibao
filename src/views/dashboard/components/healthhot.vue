@@ -141,6 +141,7 @@ export default {
   // padding: 0rem 0rem;
   box-shadow: 0px 0px 8px 0px #ebebeb;
   overflow: hidden;
+  background-color: white;
   .hot-title {
     margin-bottom: 1rem;
     padding: 10px 16px;
