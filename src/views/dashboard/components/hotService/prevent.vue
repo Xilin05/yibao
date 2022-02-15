@@ -112,11 +112,17 @@ export default {
       font-size: 0.9rem;
     }
   }
+  /deep/ .van-nav-bar {
+    z-index: 2;
+  }
   /deep/ .van-tabs__wrap {
     height: 3rem;
     // border-bottom: 1px solid rgb(255, 117, 37);
     box-shadow: 0px 0px 8px 0px #ebebeb;
     background-color: #fff;
+  }
+  /deep/ .van-sticky--fixed {
+    z-index: 1;
   }
   /deep/ .van-tabs__nav--card {
     height: 3rem;
