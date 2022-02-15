@@ -58,16 +58,34 @@
     >
       <van-steps direction="vertical" :active="active">
         <van-step>
-          <h3>第一针（已接种）</h3>
-          <p>2016-07-12 12:40</p>
+          <div class="title">
+            第一针
+            <span style="color: #b4b4b4; font-size: 0.8rem; font-weight: 600"
+              >[北京科兴中维]</span
+            >
+          </div>
+          <div class="record">
+            <span>已接种</span>
+            <span>2021-04-30</span>
+          </div>
         </van-step>
         <van-step>
-          <h3>第二针（已接种）</h3>
-          <p>2016-07-11 10:00</p>
+          <div class="title">
+            第二针
+            <span style="color: #b4b4b4; font-size: 0.8rem; font-weight: 600"
+              >[北京科兴中维]</span
+            >
+          </div>
+          <div class="record">
+            <span>已接种</span>
+            <span>2021-06-15</span>
+          </div>
         </van-step>
         <van-step>
-          <h3>第三针</h3>
-          <p>2016-07-10 09:30</p>
+          <div class="title">第三针</div>
+          <div class="record">
+            <span>未接种</span>
+          </div>
         </van-step>
       </van-steps>
     </van-dialog>
@@ -375,8 +393,42 @@ export default {
       }
     }
   }
+
   /deep/ .van-divider {
     margin: 8px 0;
   }
+  /deep/ .van-step__title {
+    width: 95%;
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    padding: 10px 0px;
+    .title {
+      // background-color: rgb(206, 206, 206);
+      font-size: 0.9rem;
+      font-weight: 600;
+      width: 70%;
+      // color: black;
+    }
+    .record {
+      width: 30%;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: #9e9e9e;
+      display: flex;
+      flex-wrap: wrap;
+      text-align: right;
+      span {
+        width: 100%;
+      }
+    }
+  }
+  /deep/ .van-dialog__content {
+    width: 95%;
+    margin: 0 auto;
+  }
+  // /deep/ .van-step--vertical:not(:last-child)::after {
+  //   border: none;
+  // }
 }
 </style>
