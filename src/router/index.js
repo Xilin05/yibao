@@ -58,7 +58,7 @@ const routes = [
       import("@/views/dashboard/components/hotService/appointDetail"),
     meta: {
       title: "AppointmentDetail",
-      name: "疫苗预约信息",
+      name: "疫苗预约信息填写与提交",
     },
   },
   {
@@ -71,6 +71,16 @@ const routes = [
     },
   },
   {
+    path: "/aciddetail",
+    name: "AcidAppointment",
+    component: () =>
+      import("@/views/dashboard/components/hotService/acidDetail"),
+    meta: {
+      title: "AcidAppointment",
+      name: "核酸预约信息填写与提交",
+    },
+  },
+  {
     path: "/outpatient",
     name: "outPatient",
     component: () =>
@@ -78,6 +88,16 @@ const routes = [
     meta: {
       title: "outPatient",
       name: "门诊预约",
+    },
+  },
+  {
+    path: "/patientDetail",
+    name: "PatientAppointment",
+    component: () =>
+      import("@/views/dashboard/components/hotService/patientDetail"),
+    meta: {
+      title: "PatientAppointment",
+      name: "门诊预约信息填写与提交",
     },
   },
   {
