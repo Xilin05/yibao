@@ -1,7 +1,7 @@
 <template>
   <div class="appoint-container">
     <van-nav-bar
-      title="填写预约"
+      title="预约信息提交"
       left-text="返回"
       left-arrow
       fixed

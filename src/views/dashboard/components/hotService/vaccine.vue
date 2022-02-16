@@ -266,6 +266,9 @@ export default {
       if (res.status == 0) {
         this.$toast.clear();
         this.position = res.data;
+        if (res.count <= 20) {
+          this.finished = true;
+        }
       } else {
         this.$toast({
           message: "定位失败",
