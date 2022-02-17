@@ -23,6 +23,7 @@ import { Dialog } from "vant";
 import { Divider } from "vant";
 import { Picker } from "vant";
 import { Step, Steps } from "vant";
+import { SubmitBar } from 'vant';
 
 // 全局注册
 Vue.use(Icon);
@@ -55,3 +56,4 @@ Vue.use(Divider);
 Vue.use(Picker);
 Vue.use(Step);
 Vue.use(Steps);
+Vue.use(SubmitBar);

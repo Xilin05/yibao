@@ -120,8 +120,6 @@
 //例如：import 《组件名称》 from '《组件路径》';
 import { timeJson1 } from "@/api/timeSelect";
 export default {
-  //import引入的组件需要注入到对象中才能使用
-
   components: {},
   props: {},
   data() {
@@ -165,7 +163,6 @@ export default {
       console.log(timeJson1);
     },
     onClickLeft() {
-      // this.$toast.success("返回");
       this.$router.go(-1);
     },
     formatDate(date) {

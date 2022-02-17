@@ -52,6 +52,45 @@
         </div>
       </van-list>
     </div>
+    <van-dialog
+      v-model="show"
+      title="核酸预约服务说明"
+      confirm-button-text="我知道了"
+      confirm-button-color="rgb(87, 135, 255)"
+      show-cancel-button
+      @confirm="toAppointment()"
+    >
+      <div class="tips">
+        <h3>（一）适用人群</h3>
+        <div>
+          1. 发热门诊患者；<br />
+          2. 新入院患者及陪护；<br />
+          3. 其他需行新冠核酸检测人员。
+        </div>
+        <h3>（二）服务时间</h3>
+        <div>
+          1. 发热门诊患者：24小时。<br />
+          2.
+          新入院患者及陪护：工作日8:00-12:00，13:00-17:30；法定节假日上午8:00-12:00。<br />
+          3.
+          其他需行新冠核酸检测人员：工作日8:00-12:00，13:00-17:30；法定节假日8:00-12:00。
+        </div>
+        <h3>（三）服务流程</h3>
+        <div>关注公众号最新推文说明。</div>
+        <h3>（四）核酸检测费用</h3>
+        <div>
+          1. 政府规定的发热门诊就诊患者、新入院患者及其陪护免费（1次）。<br />
+          2. 其他人员检测费用35元。<br />
+          <span style="color: red">[注] 现场支付，线上预约不收费。</span>
+        </div>
+        <h3>（五）出结果时限</h3>
+        <div>
+          1. 发热门诊患者：6小时内;<br />
+          2. 拟入院患者及其陪护：12小时内;<br />
+          3. 其他：24小时内
+        </div>
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -78,6 +117,7 @@ export default {
       location: {},
       show: false,
       acidAddress: {},
+      routerItem: {},
     };
   },
   //计算属性 类似于data概念
@@ -106,11 +146,27 @@ export default {
       let res = await this.$jsonp(url, data);
       console.log("初始化位置", res);
       if (res.status == 0) {
-        this.district = res.result.ad_info.district;
-        this.location = res.result.location;
-        this.searchOrganize(res.result.ad_info.district, res.result.location);
+        if (res.count <= 20) {
+          this.finished = true;
+        }
+        if (res.result.ad_info.district == "") {
+          this.district = res.result.ad_info.city;
+          this.location = res.result.location;
+          this.searchOrganize(res.result.ad_info.city, res.result.location);
+        } else {
+          this.district = res.result.ad_info.district;
+          this.location = res.result.location;
+          this.searchOrganize(res.result.ad_info.district, res.result.location);
+        }
+        this.$toast.clear();
       } else {
-        this.$toast.fail("定位失败！");
+        this.$toast({
+          message: "定位失败",
+          forbidClick: true,
+          duration: 2000,
+          loadingType: "spinner",
+          icon: "cross",
+        });
       }
     },
     async searchOrganize(district, params) {
@@ -197,12 +253,17 @@ export default {
       this.loading = false;
     },
     toDetail(item) {
-      // this.vaccineAddress = item;
-      // this.show = true;
-      // this.toAppointment(item);
+      this.routerItem = item;
+      this.show = true;
+      // this.$router.push({
+      //   name: "AcidAppointment",
+      //   params: item,
+      // });
+    },
+    toAppointment() {
       this.$router.push({
         name: "AcidAppointment",
-        params: item,
+        params: this.routerItem,
       });
     },
   },
@@ -297,5 +358,18 @@ export default {
   // /deep/ .van-step--vertical:not(:last-child)::after {
   //   border: none;
   // }
+  .tips {
+    // font-size: 0.9rem;
+    h3 {
+      font-size: 0.9rem;
+      margin: 0.5rem auto;
+    }
+    div {
+      width: 100%;
+      padding: 0px 15px;
+      font-size: 0.9rem;
+      // text-indent: 1rem;
+    }
+  }
 }
 </style>
