@@ -117,85 +117,6 @@ export default {
       index: 1,
       district: "",
       location: {},
-      position1: [
-        {
-          id: "4997511912901690333",
-          title: "流沙西社区卫生服务中心预防接种门诊",
-          address:
-            "广东省揭阳市普宁市赤华南路广东省普宁市流沙第五小学北侧约40米",
-          tel: "0663-2220003",
-          category: "医疗保健:社区医院",
-          type: 0,
-          location: {
-            lat: 23.296035,
-            lng: 116.160005,
-          },
-          _distance: 603.56,
-          ad_info: {
-            adcode: 445281,
-            province: "广东省",
-            city: "揭阳市",
-            district: "普宁市",
-          },
-        },
-        {
-          id: "6762762251988516650",
-          title: "普宁明华体育馆新冠疫苗临时接种点",
-          address: "广东省揭阳市普宁市体育路普宁明华体育馆",
-          tel: "",
-          category: "医疗保健:其它医疗保健",
-          type: 0,
-          location: {
-            lat: 23.300302,
-            lng: 116.156653,
-          },
-          _distance: 985.08,
-          ad_info: {
-            adcode: 445281,
-            province: "广东省",
-            city: "揭阳市",
-            district: "普宁市",
-          },
-        },
-        {
-          id: "1221150921389326096",
-          title: "普宁市流沙东社区卫生服务中心预防接种门诊",
-          address: "广东省揭阳市普宁市流沙大道新光里30栋",
-          tel: "0663-2626520;0663-2822992",
-          category: "医疗保健:社区医院",
-          type: 0,
-          location: {
-            lat: 23.296042,
-            lng: 116.175444,
-          },
-          _distance: 1003.48,
-          ad_info: {
-            adcode: 445281,
-            province: "广东省",
-            city: "揭阳市",
-            district: "普宁市",
-          },
-        },
-        {
-          id: "5562126684268841130",
-          title: "普宁市流沙北街道社区卫生服务中心预防接种门诊",
-          address: "广东省揭阳市普宁市已搬迁至建设局旁边",
-          tel: "",
-          category: "医疗保健:社区医院",
-          type: 0,
-          location: {
-            lat: 23.298944,
-            lng: 116.150437,
-          },
-          _distance: 1574.16,
-          ad_info: {
-            adcode: 445281,
-            province: "广东省",
-            city: "揭阳市",
-            district: "普宁市",
-          },
-        },
-      ],
       show: false,
       vaccineAddress: {},
       active: 2,
@@ -237,11 +158,27 @@ export default {
       data.output = "jsonp";
       let res = await this.$jsonp(url, data);
       if (res.status == 0) {
-        this.district = res.result.ad_info.district;
-        this.location = res.result.location;
-        this.searchOrganize(res.result.ad_info.district, res.result.location);
+        if (res.count <= 20) {
+          this.finished = true;
+        }
+        if (res.result.ad_info.district == "") {
+          this.district = res.result.ad_info.city;
+          this.location = res.result.location;
+          this.searchOrganize(res.result.ad_info.city, res.result.location);
+        } else {
+          this.district = res.result.ad_info.district;
+          this.location = res.result.location;
+          this.searchOrganize(res.result.ad_info.district, res.result.location);
+        }
+        this.$toast.clear();
       } else {
-        this.$toast.fail("定位失败！");
+        this.$toast({
+          message: "定位失败",
+          forbidClick: true,
+          duration: 2000,
+          loadingType: "spinner",
+          icon: "cross",
+        });
       }
     },
     async searchOrganize(district, params) {
