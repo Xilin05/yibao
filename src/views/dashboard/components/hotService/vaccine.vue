@@ -52,7 +52,7 @@
       v-model="show"
       title="匹配接种记录"
       confirm-button-text="预约"
-      confirm-button-color="rgb(87, 135, 255)"
+      confirm-button-color="rgb(40, 177, 97)"
       show-cancel-button
       @confirm="toAppointment()"
     >
