@@ -118,6 +118,7 @@ export default {
       show: false,
       acidAddress: {},
       routerItem: {},
+      index: 1,
     };
   },
   //计算属性 类似于data概念
@@ -177,7 +178,7 @@ export default {
       var data = {
         boundary: nearby,
         page_size: 20,
-        page_index: 1,
+        page_index: this.index,
         keyword: "核酸",
         filter: category,
         orderby: "_distance",
@@ -224,7 +225,7 @@ export default {
         boundary: nearby,
         page_size: 20,
         page_index: this.index,
-        keyword: "接种",
+        keyword: "核酸",
         filter: category,
         orderby: "_distance",
         // key: 腾讯位置控制台申请的密钥
