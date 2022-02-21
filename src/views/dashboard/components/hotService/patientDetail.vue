@@ -184,6 +184,9 @@ export default {
       this.resources = dayJson[key];
     },
     selectWeekDay(key, item) {
+      if (item.resources == 0) {
+        return this.$toast.fail("号源不足，不予预约");
+      }
       this.weekdayActiced = key;
     },
     onSubmit() {
