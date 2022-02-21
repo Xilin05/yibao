@@ -64,53 +64,52 @@
       </van-cell-group>
     </div>
     <div class="form-container">
-      <van-cell-group>
-        <van-cell
-          title="选择预约日期"
-          v-model="form.date"
-          @click="show = true"
-        />
-        <van-calendar
-          v-model="show"
-          @select="onSelect"
-          color="rgb(87, 135, 255)"
-          :show-confirm="false"
-          :min-date="minDate"
-          :max-date="maxDate"
-        />
-        <div class="peroidSelect">
-          <div class="tips">
-            <h3>请预约上一针接种180天后的日期。</h3>
-            <h3>可预约时间段：</h3>
-          </div>
+      <div class="days">
+        <div v-for="(item, i) in days" :key="i">
+          {{ item.weekday }}
           <div
             :class="{
-              disabled: item.remain == 0,
-              actived: activeKey == i && item.remain != 0,
+              day_Actived: dayActived == i,
             }"
-            class="period"
-            v-for="(item, i) in period"
-            :key="i"
-            @click="selected(i, item)"
+            class="day"
+            @click="selectDay(i, item)"
           >
-            <div class="time">{{ item.time }}</div>
-            <div class="type">
-              <van-tag
-                color="rgb(215, 241, 231)"
-                text-color="rgb(14, 168, 125)"
-                size="medium"
-                >{{ item.type }}</van-tag
-              >
-            </div>
-            <div class="numbers">剩余剂量：{{ item.remain }}</div>
+            {{ item.day }}
           </div>
         </div>
-        <div class="submitBtn">
-          <van-button round block type="primary" @click="submitForm"
-            >提交预约</van-button
-          >
+      </div>
+      <div class="peroidSelect">
+        <div class="tips">
+          <h3>请预约上一针接种180天后的日期。</h3>
+          <h3>可预约时间段：</h3>
         </div>
-      </van-cell-group>
+        <div
+          :class="{
+            disabled: item.remain == 0,
+            actived: activeKey == i && item.remain != 0,
+          }"
+          class="period"
+          v-for="(item, i) in remain"
+          :key="i"
+          @click="selected(i, item)"
+        >
+          <div class="time">{{ item.time }}</div>
+          <div class="type">
+            <van-tag
+              color="rgb(215, 241, 231)"
+              text-color="rgb(14, 168, 125)"
+              size="medium"
+              >{{ item.type }}</van-tag
+            >
+          </div>
+          <div class="numbers">剩余剂量：{{ item.remain }}</div>
+        </div>
+      </div>
+      <div class="submitBtn">
+        <van-button round block type="primary" @click="submitForm"
+          >提交预约</van-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -133,7 +132,7 @@ export default {
       form: {
         name: "赖喜铃",
         gender: "男",
-        identityID: "445281**********90",
+        identityID: "4452************90",
         phone: "17876374525",
         classification: "学生",
         injection_name: "新型冠状病毒灭活疫苗(Vero细胞)",
@@ -143,13 +142,12 @@ export default {
         period: {},
         submitTime: "",
       },
-      // defaultDate: new Date(),
-      minDate: new Date(),
-      maxDate: new Date(new Date().getTime() + 86400000 * 7),
-
+      days: [],
+      dayActived: 0,
       show: false,
       period: [],
       activeKey: null,
+      remain: [],
     };
   },
   //计算属性 类似于data概念
@@ -158,15 +156,32 @@ export default {
   watch: {},
   //方法集合
   methods: {
-    getPeriod() {
-      this.period = timeJson1.data;
-      console.log(timeJson1);
+    // getPeriod() {
+    //   this.period = timeJson1.data;
+    //   console.log(timeJson1);
+    // },
+    initDate() {
+      this.remain = timeJson1[0];
+      let days = [];
+      for (let i = 0; i <= 5; i++) {
+        let obj = {};
+        let test = new Date().getTime() + 86400000 * i;
+        let date = new Date(test);
+        obj.day = `${date.getMonth() + 1}/${date.getDate()}`;
+        obj.weekday = "周" + "日一二三四五六".charAt(date.getDay());
+        days.push(obj);
+      }
+      this.days = days;
     },
     onClickLeft() {
       this.$router.go(-1);
     },
     formatDate(date) {
       return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+    },
+    selectDay(key, item) {
+      this.dayActived = key;
+      this.remain = timeJson1[key];
     },
     onSelect(date) {
       this.show = false;
@@ -204,8 +219,7 @@ export default {
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
-    // this.getDateTest();
-    this.getPeriod();
+    this.initDate();
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
@@ -231,7 +245,37 @@ export default {
   .form-container {
     margin-bottom: 1rem;
     padding-bottom: 15px;
+    background-color: #fff;
     box-shadow: 0px 0px 8px 0px #ebebeb;
+    .days {
+      width: 100%;
+      height: auto;
+      padding: 5px 0px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #ebebeb;
+      div {
+        // width: $(100/6);
+        flex: 1;
+        height: 100%;
+        line-height: 1rem;
+        text-align: center;
+        font-size: 0.9rem;
+        color: gray;
+        border: 1px 0px 1px 1px solid #ebebeb;
+        .day {
+          padding: 5px;
+          border-radius: 50%;
+          height: 2rem;
+          width: 2rem;
+          line-height: 2rem;
+          margin: 0.3rem auto;
+        }
+      }
+      div:last-child() {
+        border: 1px 1px 1px 0px solid #ebebeb;
+      }
+    }
     .peroidSelect {
       width: 100%;
       display: flex;
@@ -290,6 +334,11 @@ export default {
 .disabled {
   // color: #ebebeb;
   filter: grayscale(1);
+}
+.day_Actived {
+  color: white !important;
+  background-color: rgb(40, 177, 97);
+  // background-color: #e3e1ff;
 }
 .actived {
   // position: relative;
