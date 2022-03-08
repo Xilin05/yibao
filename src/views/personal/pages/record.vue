@@ -15,7 +15,7 @@
           <img src="../../../assets/avatar.jpg" alt="" />
         </div>
         <div class="name">
-          <div>赖喜铃</div>
+          <div>**铃</div>
           <div>男 1998-05-12</div>
         </div>
       </div>

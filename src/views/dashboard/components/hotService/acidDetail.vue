@@ -98,8 +98,8 @@ export default {
     //这里存放数据
     return {
       form: {
-        name: "赖喜铃",
-        phoneNumber: "17876374525",
+        name: "**铃",
+        phoneNumber: "1787*****25",
         identityID: "4452************90",
         addressName: "",
         date: "",
