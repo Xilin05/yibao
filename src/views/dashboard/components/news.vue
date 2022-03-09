@@ -142,7 +142,6 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import { getAllData, getCovidNews, getNewsExp } from "@/api/getData";
-// import { formatTime } from "@/utils";
 import { fmtDate } from "@/utils/date";
 
 export default {
@@ -170,37 +169,36 @@ export default {
   },
   //方法集合
   methods: {
-    // async getData() {
-    //   let { data } = await getAllData();
-    //   if (data.code != 200) {
-    //     this.$notify({
-    //       type: "danger",
-    //       message: "获取疫情数据失败！",
-    //     });
-    //   } else {
-    //     console.log(data);
-    //     this.covidData = data.newslist[0].desc;
-    //     console.log(this.covidData);
-    //   }
-    // },
-    getData() {
-      let data = getAllData();
-      // console.log(data);
-      this.covidData = data;
+    async getData() {
+      let { data } = await getAllData();
+      if (data.code != 200) {
+        this.$notify({
+          type: "danger",
+          message: "获取疫情数据失败！",
+        });
+      } else {
+        console.log(data);
+        this.covidData = data.newslist[0].desc;
+        console.log(this.covidData);
+      }
     },
+    // getData() {
+    //   let data = getAllData();
+    //   this.covidData = data;
+    // },
     async getNews(page, num) {
-      // let res = await getCovidNews(page, num);
-      let res = await getNewsExp();
+      let res = await getCovidNews(page, num);
+      // let res = await getNewsExp();
       // this.news = res.data.results;
-      this.news = res.results;
-      this.loading = false;
-      // if (res.status != 200) {
-      //   this.loading = true;
-      //   return this.$notify({ type: "danger", message: "获取新闻失败！" });
-      // } else {
-      //   this.news = res.data.results;
-      //   this.loading = false;
-      // }
+      // this.news = res.results;
+      // this.loading = false;
+      if (res.status != 200) {
+        this.loading = true;
+        return this.$notify({ type: "danger", message: "获取新闻失败！" });
+      } else {
+        this.news = res.data.results;
+        this.loading = false;
+      }
     },
     seeDetail(item) {
       this.show = true;

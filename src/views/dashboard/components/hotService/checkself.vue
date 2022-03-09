@@ -13,7 +13,7 @@
         shape="round"
         v-model="value"
         show-action
-        placeholder="请输入症状关键词或疾病名称"
+        placeholder="因接口收费，此处仅固定“感冒”为测试实例"
         @search="onSearch"
       >
         <template #action>

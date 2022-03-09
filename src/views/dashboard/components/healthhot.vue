@@ -77,7 +77,7 @@ export default {
   data() {
     //这里存放数据
     return {
-      showType: true,
+      showType: false,
       number: 5,
       begin: 0,
       newsList: [],
@@ -92,18 +92,19 @@ export default {
   //方法集合
   methods: {
     async getNews() {
-      // let num = this.number;
-      // let start = this.begin;
-      // let { data } = await getHotNews(num, start);
-      // if (data.code != 10000) {
-      //   this.showType = false;
-      //   this.$toast("获取新闻失败！");
-      // } else {
-      //   this.showType = true;
-      //   this.newsList = data.result.result.list;
-      // }
-      this.newsList = getHotNews().result.result.list;
-      // this.showType = false;
+      let num = this.number;
+      let start = this.begin;
+      let { data } = await getHotNews(num, start);
+      console.log(data);
+      if (data.code != "10000") {
+        this.showType = false;
+        this.$toast("获取新闻失败！");
+      } else {
+        this.showType = true;
+        return (this.newsList = data.result.result.list);
+      }
+      // this.newsList = getHotNews().result.result.list;
+      this.showType = false;
     },
     async loadMore() {
       this.isAdd = true;

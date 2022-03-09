@@ -32,6 +32,15 @@ module.exports = {
           "^/api": "",
         },
       },
+      "/news": {
+        target: "https://way.jd.com",
+        // target: "http://apis.juhe.cn",
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          "^/news": "",
+        },
+      },
       // "/maps": {
       //   target: "https://apis.map.qq.com",
       //   changeOrigin: true,

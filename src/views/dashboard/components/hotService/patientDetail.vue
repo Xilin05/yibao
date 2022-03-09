@@ -113,8 +113,8 @@ export default {
     //这里存放数据
     return {
       form: {
-        name: "**铃",
-        phoneNumber: "1787*****25",
+        name: "赖**",
+        phoneNumber: "17*******25",
         addressName: "",
         department: "",
         date: "",

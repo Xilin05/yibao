@@ -130,10 +130,10 @@ export default {
       vaccinePoint: "",
       item: {},
       form: {
-        name: "**铃",
+        name: "赖**",
         gender: "男",
         identityID: "4452************90",
-        phone: "1787*****25",
+        phone: "17*******25",
         classification: "学生",
         injection_name: "新型冠状病毒灭活疫苗(Vero细胞)",
         injection_number: "第三针",

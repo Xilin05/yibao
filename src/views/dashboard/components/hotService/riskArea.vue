@@ -282,7 +282,7 @@
                   <van-collapse v-model="activeNames">
                     <van-collapse-item
                       title="高风险地区，进入本地政策"
-                      name="1"
+                      name="4"
                     >
                       <span v-if="!policyResult.to_info.high_in_desc"
                         >暂无相关信息</span
@@ -293,13 +293,13 @@
                     </van-collapse-item>
                     <van-collapse-item
                       title="低风险地区，进入本地政策"
-                      name="2"
+                      name="5"
                     >
                       <div class="content">
                         {{ policyResult.to_info.low_in_desc }}
                       </div>
                     </van-collapse-item>
-                    <van-collapse-item title="本地出行政策" name="3">
+                    <van-collapse-item title="本地出行政策" name="6">
                       <div class="content">
                         {{ policyResult.to_info.out_desc }}
                       </div>
@@ -351,6 +351,7 @@
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 //例如：import 《组件名称》 from '《组件路径》';
 import { riskAreaJson } from "@/api/news.js";
+import { getAreaRiskLevel } from "@/api/getData.js";
 import { areaList } from "@vant/area-data";
 import { cityJson } from "@/api/city";
 import { gzToXaJson } from "@/api/guangzhouToXian";
@@ -363,17 +364,17 @@ export default {
   data() {
     //这里存放数据
     return {
-      activeName: "b",
+      activeName: "a",
       highCount: 0,
       middleCount: 0,
       updateTime: "",
       highArea: [],
       middleArea: [],
-      fromArea: "北京市，北京市",
-      toArea: "河北省，唐山市",
+      fromArea: "广东省，广州市",
+      toArea: "陕西省，西安市",
       policy: {
-        fromArea: ["北京市", "北京市"],
-        toArea: ["河北省", "唐山市"],
+        fromArea: ["广东省", "广州市"],
+        toArea: ["陕西省", "西安市"],
       },
       showFromArea: false,
       showToArea: false,
@@ -393,14 +394,21 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    getArea() {
+    async getArea() {
+      let { data } = await getAreaRiskLevel();
+      console.log(data);
+      this.highCount = data.result.high_count;
+      this.middleCount = data.result.middle_count;
+      this.updateTime = data.result.end_update_time;
       // console.log(riskAreaJson.result.high_list);
       // console.log(riskAreaJson.result.middle_list);
-      this.highCount = riskAreaJson.result.high_count;
-      this.middleCount = riskAreaJson.result.middle_count;
-      this.updateTime = riskAreaJson.result.updated_date;
-      let highlist = riskAreaJson.result.high_list;
-      let middlelist = riskAreaJson.result.middle_list;
+      // this.highCount = riskAreaJson.result.high_count;
+      // this.middleCount = riskAreaJson.result.middle_count;
+      // this.updateTime = riskAreaJson.result.updated_date;
+      // let highlist = riskAreaJson.result.high_list;
+      // let middlelist = riskAreaJson.result.middle_list;
+      let highlist = data.result.high_list;
+      let middlelist = data.result.middle_list;
       let result1 = this.sortClass(highlist);
       this.highArea = result1;
       let result2 = this.sortClass(middlelist);
@@ -501,7 +509,7 @@ export default {
       // }
     },
     getCityList() {
-      console.log(this.policyResult);
+      // console.log(this.policyResult);
       this.cityList = cityJson.result;
     },
     strSlice(str) {
